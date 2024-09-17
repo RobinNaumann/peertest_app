@@ -1,0 +1,46 @@
+name: peer_app
+description: A new Flutter project.
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.1.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  elbe: ^0.1.36
+  moewe: ^0.2.4
+  pocketbase: ^0.18.1
+  url_launcher: ^6.2.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  appcheck: ^1.5.2
+  external_app_launcher: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.13.1"
+  #flutter pub run flutter_launcher_icons
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: SpaceGrotesk
+      fonts:
+        - asset: "assets/fonts/space_grotesk.ttf"
+          weight: 800
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/img/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/img/app_icon_adaptive.png"
