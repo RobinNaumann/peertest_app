@@ -24,6 +24,7 @@ class BookmarksView extends StatelessWidget {
                   const Text.h6("You're testing"),
                   for (final id in data.bookmarks)
                     MemberCard(
+                        key: Key(id),
                         appId: id,
                         onRemove: () {
                           showConfirmDialog(context,

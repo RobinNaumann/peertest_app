@@ -1,6 +1,7 @@
 import 'package:elbe/elbe.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:moewe/moewe.dart';
 import 'package:peer_app/bit/b_auth.dart';
 import 'package:peer_app/bit/b_testings.dart';
 import 'package:peer_app/service/s_storage.dart';
@@ -16,6 +17,20 @@ import 'view/v_home.dart';
 void main() async {
   await Hive.initFlutter();
   await StorageService.i.init();
+  LoggerService.init(ConsoleLoggerService());
+  WidgetsFlutterBinding.ensureInitialized();
+  final pI = await tryCatchAsync(() => PackageInfo.fromPlatform());
+
+  await Moewe(
+          host: "open.moewe.app",
+          project: "a9c24f15a69ba10d",
+          app: "05c5571c598e136c",
+          appVersion: pI?.version,
+          buildNumber: int.tryParse(pI?.buildNumber ?? ""))
+      .init();
+
+  moewe.events.appOpen();
+
   runApp(const _Providers());
 }
 

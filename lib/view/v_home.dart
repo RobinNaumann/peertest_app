@@ -3,6 +3,7 @@ import 'package:moewe/moewe.dart';
 import 'package:peer_app/bit/b_auth.dart';
 import 'package:peer_app/util.dart';
 import 'package:peer_app/view/v_account.dart';
+import 'package:peer_app/view/v_login.dart';
 
 import 'bookmark/v_bookmark.dart';
 
@@ -13,67 +14,50 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthBit.builder(
       onData: (bit, auth) => auth == null
-          ? _LoginPage(bit: bit)
+          ? LoginPage(bit: bit)
           : Scaffold(
               title: "peerTest",
+              leadingIcon: LeadingIcon(
+                  icon: Icons.user, onTap: (_) => context.push("/account")),
               actions: [
                 IconButton.integrated(
                     icon: Icons.plus,
                     onTap: () => context.elbeBottomSheet(
                         child: const Text(
-                            "please use the web app to create new apps:\n"
-                            "https://peerTest.org"))),
+                            "for now, please use the web app to create new apps: "
+                            "peerTest.org"))),
                 IconButton.integrated(
                     icon: Icons.messagesSquare,
-                    onTap: () => showFeedbackPage(context,
+                    onTap: () => MoeweFeedbackPage.show(context,
                         labels: const FeedbackLabels(
                           description:
-                              "thank you for making peerTest better! We will review your feedback and get back to you soon.",
+                              "thank you for making peerTest better! I'll review your feedback and get back to you soon.",
                         ),
                         theme: MoeweTheme(
                             colorAccent:
                                 context.theme.color.activeScheme.majorAccent))),
               ],
-              children: [
-                const AccountSnippet(),
-                Button.action(
-                    icon: Icons.layoutGrid,
-                    label: "view available apps",
-                    onTap: () => context.push('/apps')),
-                AuthBit.builder(
-                    small: true,
-                    onData: (bit, data) =>
-                        data != null ? const BookmarksView() : Spaced.zero),
-              ].spaced(),
+              child: ListView(
+                  children: [
+                const MoeweUpdateView(),
+                Padded.all(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const AccountSnippet(),
+                        Button.action(
+                            icon: Icons.layoutGrid,
+                            label: "view available apps",
+                            onTap: () => context.push('/apps')),
+                        AuthBit.builder(
+                            small: true,
+                            onData: (bit, data) => data != null
+                                ? const BookmarksView()
+                                : Spaced.zero),
+                      ].spaced()),
+                ),
+              ].spaced()),
             ),
     );
-  }
-}
-
-class _LoginPage extends StatelessWidget {
-  final AuthBit bit;
-  const _LoginPage({super.key, required this.bit});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        title: "peerTest",
-        child: Padded.all(
-          child: Column(children: [
-            Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.handMetal),
-                      Text.h1("welcome", textAlign: TextAlign.center),
-                      Text(
-                          "log into your peerTest.org account\nto start testing apps",
-                          textAlign: TextAlign.center)
-                    ].spaced())),
-            Button.major(
-                icon: Icons.logIn, label: "login", onTap: () => bit.login()),
-          ]),
-        ));
   }
 }

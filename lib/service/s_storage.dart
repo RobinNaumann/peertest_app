@@ -17,7 +17,7 @@ class StorageService {
 
   void toggleBookmark(String id) {
     final ms = bookmarks;
-    final add = !bookmarks.contains(id);
+    final add = !ms.contains(id);
     final nMs = add ? [...ms, id] : ms.where((b) => b != id).toList();
     _boxConfig!.put("bookmarks", nMs);
   }

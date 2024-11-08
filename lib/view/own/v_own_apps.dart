@@ -5,6 +5,7 @@ import 'package:peer_app/model/m_app.dart';
 import 'package:peer_app/util.dart';
 import 'package:peer_app/view/own/v_own_app.dart';
 import 'package:peer_app/view/v_app.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OwnAppsPage extends StatelessWidget {
   const OwnAppsPage({super.key});
@@ -25,6 +26,21 @@ class OwnAppsList extends StatelessWidget {
             create: (_) => OwnAppsBit(auth!.id),
             onData: (bit, List<AppModel> apps) => Column(
                   children: [
+                    Card(
+                        scheme: ColorSchemes.secondary,
+                        child: GestureDetector(
+                          onTap: () => launchUrlString("https://peerTest.org",
+                              mode: LaunchMode.externalApplication),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.wrench),
+                              Expanded(
+                                  child: Text(
+                                "create and close apps for testing through the web app",
+                              )),
+                            ].spaced(),
+                          ),
+                        )),
                     if (apps.isEmpty) const Text("you don't have any apps yet"),
                     for (final app in apps)
                       Card(
@@ -45,7 +61,7 @@ class OwnAppsList extends StatelessWidget {
                                       if (app.account != null)
                                         AccountSnippet(account: app.account!)
                                     ].spaced(amount: .5))),
-                            Icon(Icons.chevronRight)
+                            const Icon(Icons.chevronRight)
                           ].spaced()))
                   ].spaced(),
                 )));

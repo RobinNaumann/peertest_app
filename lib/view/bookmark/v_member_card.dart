@@ -20,8 +20,12 @@ class MemberCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
       padding: RemInsets.zero,
       child: InstalledBit.builder(
+        onLoading: (bit, _) =>
+            Padded.all(child: const Center(child: CircularProgressIndicator())),
         onData: (iBit, installed) => BitBuildProvider(
             create: (_) => AppBit(appId),
+            onLoading: (bit, _) => Padded.all(
+                child: const Center(child: CircularProgressIndicator())),
             onData: (bit, AppModel app) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -123,7 +127,7 @@ class _TestButton extends StatelessWidget {
                 : testing.nextTestPossible
                     ? Button.major(
                         icon: Icons.arrowRight,
-                        label: "test app",
+                        label: "open app",
                         onTap: () async {
                           await context.elbeBottomSheet(
                               child: TestModal(app: app));

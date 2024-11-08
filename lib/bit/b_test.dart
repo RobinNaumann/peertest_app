@@ -1,5 +1,6 @@
 import 'package:elbe/elbe.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
+import 'package:moewe/moewe.dart';
 import 'package:peer_app/app_config.dart';
 import 'package:peer_app/model/m_app.dart';
 import 'package:peer_app/service/s_pocket.dart';
@@ -61,6 +62,7 @@ class TestBit extends MapMsgBitControl<_State> {
   Future<bool> submit(String feedback) async {
     final pb = PocketService.i.pb;
     try {
+      moewe.event("test_completed", data: {"app": app.base?.id});
       await pb.collection("peertest_testing").create(body: {
         "account": userId,
         "app": app.base!.id,

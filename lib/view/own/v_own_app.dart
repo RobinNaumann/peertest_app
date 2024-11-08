@@ -18,6 +18,24 @@ class OwnAppPage extends StatelessWidget {
             create: (_) => OwnTestingsBit(app.base!.id),
             onData: (bit, List<TestingModel> ts) => BaseList(
                     children: [
+                  if (app.urlJoin == null)
+                    Card(
+                        style: ColorStyles.minorAlertWarning,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.alertTriangle),
+                            const Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                    "Your app does not have a valid download link. It should have the following format: "),
+                                Text.code(
+                                    "https://play.google.com/apps/testing/...")
+                              ],
+                            )),
+                          ].spaced(amount: 1),
+                        )),
                   _overview(context, app, ts),
                   Padded.only(
                       top: 1, child: const Text.h5("feedback you received")),
@@ -37,29 +55,42 @@ Widget _list(BuildContext context, List<TestingModel> ts) {
                   children: [
                 for (final t in tests)
                   Card(
+                      padding: RemInsets.all(.5),
                       child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(
-                              child: Text(t.accountModel?.name ?? t.account)),
-                          Text(maybeDateString(t.base?.created) ?? ""),
-                          if (auth.id != t.account)
-                            IconButton.integrated(
-                                icon: Icons.ban,
-                                onTap: () {
-                                  showConfirmDialog(context,
-                                      title: "block user?",
-                                      message:
-                                          "do you want to block this user from testing your app? \n\nTHIS CAN NOT BE UNDONE! ",
-                                      ifYes: () => aBit.blockUser(t.account));
-                                })
+                          Padded.only(
+                            left: .5,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                        t.accountModel?.name ?? t.account,
+                                        variant: TypeVariants.bold)),
+                                Text(maybeDateString(t.base?.created) ?? ""),
+                                IconButton.integrated(
+                                    icon: Icons.ban,
+                                    onTap: () {
+                                      auth.id == t.account
+                                          ? context.showToast(
+                                              "you can't block yourself")
+                                          : showConfirmDialog(context,
+                                              title: "block user?",
+                                              message:
+                                                  "do you want to block this user from testing your app? \n\nTHIS CAN NOT BE UNDONE! ",
+                                              ifYes: () =>
+                                                  aBit.blockUser(t.account));
+                                    })
+                              ].spaced(),
+                            ),
+                          ),
+                          Padded.only(
+                              bottom: .5,
+                              left: .5,
+                              right: .5,
+                              child: Text(t.feedback)),
                         ].spaced(),
-                      ),
-                      Text(t.feedback),
-                    ].spaced(),
-                  )),
+                      )),
                 if (tests.isEmpty) const Text("no feedback yet")
               ].spaced());
             }());

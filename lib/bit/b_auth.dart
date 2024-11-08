@@ -38,6 +38,13 @@ class AuthBit extends MapMsgBitControl<AuthState?> {
     reload();
   }
 
+  void loginWithEmail(String email, String password) async {
+    final pb = PocketService.i.pb;
+    await pb.collection("users").authWithPassword(email, password);
+    StorageService.i.setAuth(pb.authStore.token, pb.authStore.model.id);
+    reload();
+  }
+
   void blockUser(String userId) async {
     state.whenData((data) async {
       if (data == null) return;

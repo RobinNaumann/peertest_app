@@ -2,7 +2,7 @@ name: peer_app
 description: A new Flutter project.
 publish_to: "none"
 
-version: 1.0.0+1
+version: 0.0.3+4
 
 environment:
   sdk: ">=3.1.4 <4.0.0"
@@ -11,14 +11,15 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  elbe: ^0.1.36
-  moewe: ^0.2.4
+  moewe: ^0.2.7
   pocketbase: ^0.18.1
   url_launcher: ^6.2.4
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   appcheck: ^1.5.2
   external_app_launcher: ^4.0.0
+  package_info_plus: ^4.2.0
+  elbe: ^0.1.41
 
 dev_dependencies:
   flutter_test:
