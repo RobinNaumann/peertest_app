@@ -18,14 +18,11 @@ dependencies:
   hive_flutter: ^1.1.0
   appcheck: ^1.5.2
   external_app_launcher: ^4.0.0
-  package_info_plus: ^4.2.0
-  elbe: ^0.1.41
+  elbe: ^0.1.42
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.13.1"
+  change_app_package_name: ^1.4.0
+  flutter_launcher_icons: ^0.14.1
   #flutter pub run flutter_launcher_icons
 
 flutter:

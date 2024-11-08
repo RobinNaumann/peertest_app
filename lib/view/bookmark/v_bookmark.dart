@@ -35,7 +35,13 @@ class BookmarksView extends StatelessWidget {
                   const Spaced()
                 ].spaced(),
               )
-            : const Spaced());
+            : Padded.symmetric(
+                vertical: 3,
+                child: const Center(
+                  child: Text("Apps you're testing\nwill appear here",
+                      textAlign: TextAlign.center),
+                ),
+              ));
   }
 }
 
